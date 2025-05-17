@@ -33,6 +33,88 @@ namespace ProjetoCidade1.Repositório
             }
         }
 
+<<<<<<< HEAD
+=======
+        public IEnumerable<Produto> TodosProdutos()
+        {
+
+            List<Produto> Produtolist = new List<Produto>();
+
+
+            using (var conexao = new MySqlConnection(_conexaoMySQL))
+            {
+
+                conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand("SELECT * from Produto", conexao);
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                conexao.Close();
+
+
+                foreach (DataRow dr in dt.Rows)
+                {
+
+                    Produtolist.Add(
+                                new Produto
+                                {
+                                    Id = Convert.ToInt32(dr["Id"]),
+                                    Nome = ((string)dr["Nome"]),
+                                    Descricao = ((string)dr["Descricao"]),
+                                    Preco = Convert.ToDecimal(dr["Preco"]),
+                                });
+                }
+                // Retorna a lista de todos os clientes
+                return Produtolist;
+            }
+        }
+
+        public Produto ObterProduto(int Id)
+        {
+
+            using (var conexao = new MySqlConnection(_conexaoMySQL))
+            {
+
+                conexao.Open();
+
+                MySqlCommand cmd = new MySqlCommand("SELECT * from Produto where Id=@id ", conexao);
+
+
+                cmd.Parameters.AddWithValue("@id", Id);
+
+
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+
+
+                MySqlDataReader dr;
+
+                Produto produto = new Produto();
+
+
+
+                dr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                while (dr.Read())
+                {
+
+                    produto.Id = Convert.ToInt32(dr["Id"]);
+                    produto.Nome = (string)(dr["Nome"]);
+                    produto.Descricao = (string)(dr["Descricao"]);
+                    produto.Preco = Convert.ToDecimal(dr["Preco"]);
+                }
+
+                return produto;
+            }
+        }
+
+
+>>>>>>> dev
         public bool EditarProduto(Produto produto)
         {
             try
