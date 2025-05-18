@@ -1,7 +1,11 @@
+using ProjetoCidade1.Repositório;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<LoginRepositório>();
+builder.Services.AddScoped<ProdutoRepositório>();
 
 var app = builder.Build();
 
